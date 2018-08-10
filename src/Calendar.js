@@ -1,7 +1,7 @@
 import React from "react";
 import "./Calendar.css";
 
-const CellCalendar = (props) => {
+const CellCalendar = props => {
   return (
     <div className="WrapDays">
       <div className="WrapData">
@@ -28,24 +28,29 @@ const Calendar = () => {
     "Сентябрь",
     "Октябрь",
     "Ноябрь",
-    "Декабрь",
+    "Декабрь"
   ];
   let currentDate = new Date();
   let numberMonth = arrayMonth[currentDate.getMonth()];
-  
-  const getNumberDays = (year, month) =>{
-    return new Date(year,month,0).getDay()
+
+  const getNumberDays = (year, month) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
+  let maxDays = getNumberDays(
+    currentDate.getFullYear(),
+    currentDate.getMonth()
+  );
+  let arrayDaysList = [];
+  for (let i = 1; i <= maxDays; i++) {
+    arrayDaysList.push(<CellCalendar day={i} />);
   }
 
-  
-  return (  
+  return (
     <div className="WrapMonth">
       <div className="selectMonth">
         <p className="monthName">{numberMonth}</p>
       </div>
-      <div className="placeDays">
-        <CellCalendar />
-      </div>
+      <div className="placeDays">{arrayDaysList}</div>
     </div>
   );
 };
