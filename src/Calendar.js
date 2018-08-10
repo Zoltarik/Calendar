@@ -1,6 +1,6 @@
 import React from "react";
 import "./Calendar.css";
-
+import moment from "moment";
 const CellCalendar = props => {
   return (
     <div className="WrapDays">
@@ -16,30 +16,11 @@ const CellCalendar = props => {
 };
 
 const Calendar = () => {
-  let arrayMonth = [
-    "Январь",
-    "Февраль",
-    "Март",
-    "Апрель",
-    "Май",
-    "Июнь",
-    "Июль",
-    "Август",
-    "Сентябрь",
-    "Октябрь",
-    "Ноябрь",
-    "Декабрь"
-  ];
-  let currentDate = new Date();
-  let numberMonth = arrayMonth[currentDate.getMonth()];
-
-  const getNumberDays = (year, month) => {
-    return new Date(year, month + 1, 0).getDate();
-  };
-  let maxDays = getNumberDays(
-    currentDate.getFullYear(),
-    currentDate.getMonth()
-  );
+  moment.locale("ru");
+  let currentMonth = moment().format("MMMM");
+  let maxDays = moment()
+    .endOf("month")
+    .format("D");
   let arrayDaysList = [];
   for (let i = 1; i <= maxDays; i++) {
     arrayDaysList.push(<CellCalendar day={i} />);
@@ -48,7 +29,7 @@ const Calendar = () => {
   return (
     <div className="WrapMonth">
       <div className="selectMonth">
-        <p className="monthName">{numberMonth}</p>
+        <p className="monthName">{currentMonth}</p>
       </div>
       <div className="placeDays">{arrayDaysList}</div>
     </div>
